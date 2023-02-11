@@ -156,6 +156,7 @@ async def start(
         work_queues=work_queues,
         work_queue_prefix=work_queue_prefix,
         work_pool_name=work_pool_name,
+        api=api,
         prefetch_seconds=prefetch_seconds,
         limit=limit,
     ) as agent:

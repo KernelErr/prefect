@@ -57,12 +57,12 @@ if TYPE_CHECKING:
 from prefect.client.base import PrefectHttpxClient, app_lifespan_context
 
 
-def get_client(httpx_settings: dict = None) -> "OrionClient":
+def get_client(httpx_settings: dict = None, api: str = None) -> "OrionClient":
     """
     Needs a docstring.
     """
     ctx = prefect.context.get_settings_context()
-    api = PREFECT_API_URL.value()
+    api = api or PREFECT_API_URL.value()
     if not api:
         # create an ephemeral API if none was provided
         from prefect.orion.api.server import create_app

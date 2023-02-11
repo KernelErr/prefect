@@ -46,6 +46,7 @@ class OrionAgent:
         work_queues: List[str] = None,
         work_queue_prefix: Union[str, List[str]] = None,
         work_pool_name: str = None,
+        api: str = None,
         prefetch_seconds: int = None,
         default_infrastructure: Infrastructure = None,
         default_infrastructure_document_id: UUID = None,
@@ -59,6 +60,7 @@ class OrionAgent:
 
         self.work_queues: Set[str] = set(work_queues) if work_queues else set()
         self.work_pool_name = work_pool_name
+        self.api = api
         self.prefetch_seconds = prefetch_seconds
         self.submitting_flow_run_ids = set()
         self.cancelling_flow_run_ids = set()
@@ -609,7 +611,7 @@ class OrionAgent:
         self.limiter = (
             anyio.CapacityLimiter(self.limit) if self.limit is not None else None
         )
-        self.client = get_client()
+        self.client = get_client(api=self.api)
         await self.client.__aenter__()
         await self.task_group.__aenter__()
 
